@@ -1,0 +1,8 @@
+version: "3"
+services:
+  redis:
+    image: redislabs/redisearch:latest
+    ports:
+      - "7000:6379"
+    volumes:
+      - ./data:/data
