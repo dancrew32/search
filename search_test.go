@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,6 +12,11 @@ import (
 func TestSearchHandler(t *testing.T) {
 	req, err := http.NewRequest("GET", "/search", nil)
 	assert.Nil(t, err)
+
+	params := url.Values{}
+	params.Add("q", "hello world")
+	req.URL.RawQuery = params.Encode()
+	assert.Equal(t, req.URL.String(), "/search?q=hello+world")
 
 	recorder := httptest.NewRecorder()
 	handler := http.HandlerFunc(SearchHandler)
