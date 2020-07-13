@@ -23,7 +23,7 @@ down:
 	docker-compose down
 
 test:
-	go test ./...
+	go test -v ./...
 
 format:
 	gofmt -w .
