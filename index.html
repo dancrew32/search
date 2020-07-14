@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Hello World</title>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+async function getData(url) {
+  const response = await window.fetch(url);
+  return await response.json();
+}
+function Input() {
+  const [value, setValue] = React.useState('');
+  React.useEffect(() => {
+    (async () => {
+      const encoded = encodeURIComponent(value);
+      const data = await getData(`/search/api?search=${encoded}`)
+      console.log(value, data);
+    })();
+  }, [value]);
+  return (
+    <input type="text" onChange={(event) => setValue(event.target.value)} value={value}/>
+  );
+}
+function App() {
+  return (
+    <div>
+      <Input />
+    </div>
+  );
+}
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
+
